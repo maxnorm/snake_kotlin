@@ -1,0 +1,1 @@
+data class Coordonee(var x: Int, var y: Int)
