@@ -29,7 +29,7 @@ class Grid(val width: Int, val height: Int) {
             return CodeCoords.OUT_OF_BOUND
         }
 
-        if (grid[coord.x][coord.y] == snakeHead && grid[coord.x][coord.y] != snakeBody) {
+        if (grid[coord.x][coord.y] == snakeHead || grid[coord.x][coord.y] == snakeBody) {
             return CodeCoords.SNAKE_THERE
         }
 
