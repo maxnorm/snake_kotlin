@@ -1,4 +1,4 @@
 fun main() {
-    val jeu = Jeu(10, 10)
+    val jeu = Jeu(2, 2)
     jeu.start()
 }

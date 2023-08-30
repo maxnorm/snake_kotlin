@@ -9,8 +9,8 @@ class Jeu (val width: Int, val height: Int) {
     fun start() {
         grid.init()
         val coordTete: Coordonee = genererCoord()
-        coordApple = genererCoord()
         snake.init(coordTete)
+        coordApple = genererCoord()
         grid.refresh(coordApple)
         play()
     }
@@ -39,9 +39,9 @@ class Jeu (val width: Int, val height: Int) {
             val resCode: CodeCoords = grid.verifCoord(snake.coordTete)
             // Verifie si out of bound ou emplacement non vide
             if (resCode != CodeCoords.OK) {
-                println((when {
-                    resCode == CodeCoords.SNAKE_THERE -> "Le serpent est deja sur cette case !"
-                    resCode == CodeCoords.OUT_OF_BOUND -> "$direction est hors grille."
+                println((when (resCode) {
+                    CodeCoords.SNAKE_THERE -> "Le serpent est deja sur cette case !"
+                    CodeCoords.OUT_OF_BOUND -> "$direction est hors grille."
                     else -> ""
                 }))
                 gererDefaite()
@@ -50,19 +50,22 @@ class Jeu (val width: Int, val height: Int) {
 
             if (snake.coordTete == coordApple) {
                 mangerPomme()
-
+                grid.refresh(coordApple)
                 // Verifier Victoire
-                if (grid.score == 100.0) {
+                if (grid.score == 100.00) {
                     println("BRAVO !!")
+                    display()
+                    break
                 }
+            } else {
+                grid.refresh(coordApple)
             }
 
-            grid.refresh(coordApple)
         }
     }
 
     private fun mangerPomme() {
-
+        grid.calculerPourcentage()
         snake.ajouterCorps()
         coordApple = genererCoord()
     }

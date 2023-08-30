@@ -10,7 +10,6 @@ object Snake {
         coordTete = coord
     }
 
-
     fun move(direction: Direction) {
         ancienCoord = Coordonee(coordTete.x, coordTete.y)
 
