@@ -1,5 +1,5 @@
 /**
- * Enumération des directions possibles
+ * Enumeration of the different directions
  */
 enum class Direction {
     NORD,

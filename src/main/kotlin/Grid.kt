@@ -1,4 +1,8 @@
-
+/**
+ * Class Grid represent the grid of the game
+ * @property width Int With of the grid
+ * @property height Int Height of the grid
+ */
 class Grid(val width: Int, val height: Int) {
     private lateinit var grid: Array<Array<String>>
 
@@ -8,9 +12,9 @@ class Grid(val width: Int, val height: Int) {
     private val empty = "□"
     var score = 0.0
 
-    fun init() {
+    fun init() =
         newGrid()
-    }
+
 
     fun getCase(x: Int, y: Int) : String {
         return grid[x][y]
@@ -24,7 +28,8 @@ class Grid(val width: Int, val height: Int) {
         if (coord.x !in 0..< width || coord.y !in 0..<height) {
             return CodeCoords.OUT_OF_BOUND
         }
-        if (grid[coord.x][coord.y] != empty && grid[coord.x][coord.y] != apple) {
+
+        if (grid[coord.x][coord.y] == snakeHead || grid[coord.x][coord.y] == snakeBody) {
             return CodeCoords.SNAKE_THERE
         }
 
