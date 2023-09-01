@@ -7,10 +7,14 @@ class Jeu (val width: Int, val height: Int) {
     private lateinit var coordApple: Coordonee
 
     fun start() {
-        grid.init()
         val coordTete: Coordonee = genererCoord()
         snake.init(coordTete)
+
         coordApple = genererCoord()
+        while (coordTete == coordApple) {
+            coordApple = genererCoord()
+        }
+
         grid.refresh(coordApple)
         play()
     }
@@ -36,14 +40,17 @@ class Jeu (val width: Int, val height: Int) {
 
             snake.move(direction)
 
+
             val resCode: CodeCoords = grid.verifCoord(snake.coordTete)
             // Verifie si out of bound ou emplacement non vide
-            if (resCode != CodeCoords.OK) {
-                println((when (resCode) {
-                    CodeCoords.SNAKE_THERE -> "Le serpent est deja sur cette case !"
-                    CodeCoords.OUT_OF_BOUND -> "$direction est hors grille."
-                    else -> ""
-                }))
+            if (resCode != CodeCoords.OK && resCode != CodeCoords.APPLE_THERE) {
+                println(
+                    (when (resCode) {
+                        CodeCoords.SNAKE_THERE -> "Le serpent est deja sur cette case !"
+                        CodeCoords.OUT_OF_BOUND -> "$direction est hors grille."
+                        else -> ""
+                    })
+                )
                 gererDefaite()
                 break
             }
@@ -68,6 +75,9 @@ class Jeu (val width: Int, val height: Int) {
         grid.calculerPourcentage()
         snake.ajouterCorps()
         coordApple = genererCoord()
+        while (!grid.estCoordVide(coordApple) && !grid.estComplete()) {
+            coordApple = genererCoord()
+        }
     }
 
 

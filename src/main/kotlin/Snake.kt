@@ -8,6 +8,7 @@ object Snake {
 
     fun init(coord : Coordonee) {
         coordTete = coord
+
     }
 
     fun move(direction: Direction) {
@@ -23,7 +24,7 @@ object Snake {
         }
     }
 
-    fun deplacerTete(direction: Direction) {
+    private fun deplacerTete(direction: Direction) {
         when (direction) {
             Direction.NORD -> coordTete.x--
             Direction.EST -> coordTete.y++

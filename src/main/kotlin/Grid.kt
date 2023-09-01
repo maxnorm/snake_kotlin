@@ -12,8 +12,9 @@ class Grid(val width: Int, val height: Int) {
     private val empty = "□"
     var score = 0.0
 
-    fun init() =
+    init {
         newGrid()
+    }
 
 
     fun getCase(x: Int, y: Int) : String {
@@ -22,6 +23,14 @@ class Grid(val width: Int, val height: Int) {
 
     private fun setCase(coord: Coordonee, value: String) {
         grid[coord.x][coord.y] = value
+    }
+
+    fun estCoordVide(coord: Coordonee): Boolean {
+        return grid[coord.x][coord.y] == empty
+    }
+
+    fun estComplete(): Boolean {
+        return grid.all { range -> range.all { case -> case != empty } }
     }
 
     fun verifCoord(coord: Coordonee): CodeCoords {
