@@ -1,5 +1,6 @@
 /**
  * Classe Jeu
+ *
  * @property width largeur de la grille
  * @property height hauteur de la grille
  */
@@ -25,7 +26,7 @@ class Jeu (private val width: Int,private val height: Int) {
     }
 
     /**
-     * Lance le jeua
+     * Lance le jeu
      */
     private fun play() {
         while (true) {
@@ -46,7 +47,6 @@ class Jeu (private val width: Int,private val height: Int) {
             }
 
             snake.move(direction)
-
 
             val resCode: CodeVerifCoords = grid.verifCoord(snake.coordTete)
             // Verifie si out of bound ou emplacement non vide

@@ -1,3 +1,6 @@
+/**
+ * Fonction principale du programme
+ */
 fun main() {
-    Jeu(2, 2)
+    Jeu(4, 4)
 }

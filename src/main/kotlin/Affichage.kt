@@ -1,12 +1,18 @@
+/**
+ * Objet permettant d'afficher la grille
+ */
 object Affichage {
     /**
-     * Affiche la grille
+     * Affiche la grille et le score
+     * @param grid grille à afficher
+     * @see Grid
      */
     fun display(grid: Grid) {
         for (i in 0..<grid.width) {
+            print("\t")
             for (j in 0..<grid.height) {
                 print(grid.getCase(i, j))
-                print("")
+                print("\t")
             }
             println()
         }

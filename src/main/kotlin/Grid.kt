@@ -2,14 +2,13 @@
  * Classe qui représente la grille de jeu
  * @property width largeur de la grille
  * @property height hauteur de la grille
- * @property score pourcentage de la grille occupée par le serpent
  */
 class Grid(val width: Int, val height: Int) {
     private lateinit var grid: Array<Array<String>>
+    private val empty = "⬜️"
     private val snakeHead = "🟩"
     private val snakeBody = "🟦"
     private val apple = "🍎"
-    private val empty = "□"
 
     var score = 0.0
 
@@ -19,7 +18,6 @@ class Grid(val width: Int, val height: Int) {
     init {
         newGrid()
     }
-
 
     /**
      * Retourne la case aux coordonnées données
