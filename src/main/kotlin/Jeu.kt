@@ -1,13 +1,18 @@
 /**
  * Classe Jeu
+ * @property width largeur de la grille
+ * @property height hauteur de la grille
  */
-class Jeu (val width: Int, val height: Int) {
+class Jeu (private val width: Int,private val height: Int) {
     private val grid = Grid(width, height)
     private val snake = Snake
-    private lateinit var coordApple: Coordonee
+    private var coordApple: Coordonnee
 
-    fun start() {
-        val coordTete: Coordonee = genererCoord()
+    /**
+     * Initialise le jeu
+     */
+    init {
+        val coordTete: Coordonnee = genererCoord()
         snake.init(coordTete)
 
         coordApple = genererCoord()
@@ -19,21 +24,23 @@ class Jeu (val width: Int, val height: Int) {
         play()
     }
 
+    /**
+     * Lance le jeua
+     */
     private fun play() {
         while (true) {
-            display()
+            Affichage.display(grid)
 
             print("> Entrez votre direction: ")
 
             val choix: String = readln()
-            val direction  = when {
-                choix == "w" -> Direction.NORD
-                choix == "a" -> Direction.OUEST
-                choix == "s" -> Direction.SUD
-                choix == "d" -> Direction.EST
+            val direction  = when (choix) {
+                "w" -> Direction.NORD
+                "a" -> Direction.OUEST
+                "s" -> Direction.SUD
+                "d" -> Direction.EST
                 else -> {
-                    println("Direction invalide.")
-                    gererDefaite()
+                    Affichage.defaite(grid, "Direction invalide.")
                     break
                 }
             }
@@ -41,17 +48,14 @@ class Jeu (val width: Int, val height: Int) {
             snake.move(direction)
 
 
-            val resCode: CodeCoords = grid.verifCoord(snake.coordTete)
+            val resCode: CodeVerifCoords = grid.verifCoord(snake.coordTete)
             // Verifie si out of bound ou emplacement non vide
-            if (resCode != CodeCoords.OK && resCode != CodeCoords.APPLE_THERE) {
-                println(
-                    (when (resCode) {
-                        CodeCoords.SNAKE_THERE -> "Le serpent est deja sur cette case !"
-                        CodeCoords.OUT_OF_BOUND -> "$direction est hors grille."
-                        else -> ""
-                    })
-                )
-                gererDefaite()
+            if (resCode != CodeVerifCoords.OK) {
+                Affichage.defaite(grid, (when (resCode) {
+                    CodeVerifCoords.SNAKE_THERE -> "Le serpent est deja sur cette case !"
+                    CodeVerifCoords.OUT_OF_BOUND -> "$direction est hors grille."
+                    else -> ""
+                }))
                 break
             }
 
@@ -60,8 +64,7 @@ class Jeu (val width: Int, val height: Int) {
                 grid.refresh(coordApple)
                 // Verifier Victoire
                 if (grid.score == 100.00) {
-                    println("BRAVO !!")
-                    display()
+                    Affichage.victore(grid)
                     break
                 }
             } else {
@@ -71,6 +74,9 @@ class Jeu (val width: Int, val height: Int) {
         }
     }
 
+    /**
+     * Gère le cas où le serpent mange une pomme
+     */
     private fun mangerPomme() {
         grid.calculerPourcentage()
         snake.ajouterCorps()
@@ -80,28 +86,15 @@ class Jeu (val width: Int, val height: Int) {
         }
     }
 
-
-    private fun display() {
-        for (i in 0..<grid.width) {
-            for (j in 0..<grid.height) {
-                print(grid.getCase(i, j))
-                print(" ")
-            }
-            println()
-        }
-        println(String.format("SCORE : %.2f%%", grid.score))
-        println()
-    }
-
-    private fun gererDefaite() {
-        display()
-        println("PARTIE TERMINEE")
-    }
-
-    private fun genererCoord(): Coordonee {
-        var coords = Coordonee((0..<width).random(), (0..<height).random())
-        while (grid.verifCoord(coords) != CodeCoords.OK) {
-            coords = Coordonee((0..<width).random(), (0..<height).random())
+    /**
+     * Génère des coordonnées aléatoires
+     * @return Coordonnées aléatoires
+     * @see Coordonnee
+     */
+    private fun genererCoord(): Coordonnee {
+        var coords = Coordonnee((0..<width).random(), (0..<height).random())
+        while (grid.verifCoord(coords) != CodeVerifCoords.OK) {
+            coords = Coordonnee((0..<width).random(), (0..<height).random())
         }
         return coords
     }

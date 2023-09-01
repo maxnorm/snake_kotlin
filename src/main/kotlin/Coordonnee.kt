@@ -3,4 +3,4 @@
  * @param x the x coordinate
  * @param y the y coordinate
  */
-data class Coordonee(var x: Int, var y: Int)
+data class Coordonnee(var x: Int, var y: Int)
